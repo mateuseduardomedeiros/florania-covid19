@@ -49,10 +49,10 @@ export default {
   },
   data() {
     return {
-      confirmados: 56,
-      mortes: 2,
+      confirmados: 57,
+      mortes: 3,
       populacao_est: 9.116,
-      date: "04/07/2020"
+      date: "05/07/2020"
     };
   },
   computed: {
