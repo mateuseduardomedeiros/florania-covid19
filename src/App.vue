@@ -54,16 +54,16 @@ export default {
   },
   data() {
     return {
-      notificados: 235,
-      suspeitos: 57,
-      descartados: 121,
-      curados: 26,
-      confirmados: "57 (31 ATIVOS)",
-      confirmadosaux: 57,
+      notificados: 242,
+      suspeitos: 49,
+      descartados: 131,
+      curados: 28,
+      confirmados: "62 (31 ATIVOS)",
+      confirmadosaux: 62,
       internados: 0,
       mortes: 3,
       populacao_est: 9.116,
-      date: "05/07/2020"
+      date: "06/07/2020"
     };
   },
   computed: {
