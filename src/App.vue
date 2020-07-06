@@ -21,7 +21,12 @@
     <v-main>
       <v-container fluid>
         <v-row>
+          <Card titulo="Notificados" v-bind:info="notificados" />
+          <Card titulo="Suspeitos" v-bind:info="suspeitos" />
+          <Card titulo="Descartados" v-bind:info="descartados" />
+          <Card titulo="Curados" v-bind:info="curados" />
           <Card titulo="Confirmados" v-bind:info="confirmados" />
+          <Card titulo="Internados" v-bind:info="internados" />
           <Card titulo="Mortes" v-bind:info="mortes" />
           <Card titulo="População estimada" v-bind:info="populacao_est" />
           <Card titulo="Taxa de mortalidade" v-bind:info="mortes_percent" />
@@ -49,7 +54,13 @@ export default {
   },
   data() {
     return {
-      confirmados: 57,
+      notificados: 235,
+      suspeitos: 57,
+      descartados: 121,
+      curados: 26,
+      confirmados: "57 (31 ATIVOS)",
+      confirmadosaux: 57,
+      internados: 0,
       mortes: 3,
       populacao_est: 9.116,
       date: "05/07/2020"
@@ -57,7 +68,7 @@ export default {
   },
   computed: {
     mortes_percent: function () {
-      return (this.mortes/this.confirmados).toFixed(3).toString() + "%";
+      return (this.mortes/this.confirmadosaux).toFixed(3).toString() + "%";
     }
   }
 };
