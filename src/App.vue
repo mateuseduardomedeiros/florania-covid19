@@ -32,24 +32,28 @@
           <Card titulo="Taxa de mortalidade" v-bind:info="mortes_percent" />
         </v-row>
       </v-container>
+      <v-spacer></v-spacer>
       <v-container fluid>
         <v-row v-if="arrConfirmados.length > 0">
           <v-col cols="12" sm="4" md="4">
-            <Bar class="chartBar"
+            <Bar
+              class="chartBar"
               :chartData="arrSuspeitos"
               :options="chartOptions"
               label="Progressão de Casos Suspeitos"
             />
           </v-col>
           <v-col cols="12" sm="4" md="4">
-            <Bar class="chartBar"
+            <Bar
+              class="chartBar"
               :chartData="arrConfirmados"
               :options="chartOptions"
               label="Progressão de Casos Confirmados"
             />
           </v-col>
           <v-col cols="12" sm="4" md="4">
-            <Bar class="chartBar"
+            <Bar
+              class="chartBar"
               :chartData="arrCurados"
               :options="chartOptions"
               label="Progressão de Casos Curados"
@@ -83,7 +87,7 @@ export default {
   },
   data() {
     return {
-      chartOptions: { responsive: false },
+      chartOptions: { responsive: true, maintainAspectRatio: false },
       registroAtual: {},
       registroAll: [],
       arrConfirmados: [],
@@ -94,7 +98,6 @@ export default {
   },
   async created() {
     this.carregarRegistroAtual();
-    
   },
   mounted() {
     this.carregarDadosConfirmados();
@@ -131,19 +134,17 @@ export default {
           confirmados,
           // internados,
           // mortes,
-          curados,
+          curados
           // descartados
         } = element;
 
         this.arrConfirmados.push({ data, total: confirmados });
         this.arrCurados.push({ data, total: curados });
         this.arrSuspeitos.push({ data, total: suspeitos });
-
       });
     }
   }
 };
 </script>
 <style scoped>
-
 </style>
