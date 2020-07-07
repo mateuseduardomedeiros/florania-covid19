@@ -21,13 +21,13 @@
     <v-main>
       <v-container fluid>
         <v-row>
-          <Card titulo="Notificados" v-bind:info="notificados" />
-          <Card titulo="Suspeitos" v-bind:info="suspeitos" />
-          <Card titulo="Descartados" v-bind:info="descartados" />
-          <Card titulo="Curados" v-bind:info="curados" />
+          <Card titulo="Notificados" v-bind:info="registroAtual.notificados" />
+          <Card titulo="Suspeitos" v-bind:info="registroAtual.suspeitos" />
+          <Card titulo="Descartados" v-bind:info="registroAtual.descartados" />
+          <Card titulo="Curados" v-bind:info="registroAtual.curados" />
           <Card titulo="Confirmados" v-bind:info="confirmados" />
-          <Card titulo="Internados" v-bind:info="internados" />
-          <Card titulo="Mortes" v-bind:info="mortes" />
+          <Card titulo="Internados" v-bind:info="registroAtual.internados" />
+          <Card titulo="Mortes" v-bind:info="registroAtual.mortes" />
           <Card titulo="População estimada" v-bind:info="populacao_est" />
           <Card titulo="Taxa de mortalidade" v-bind:info="mortes_percent" />
         </v-row>
@@ -37,7 +37,7 @@
       <v-col class="text-center" cols="12">
         {{ new Date().getFullYear() }} —
         <strong>Eduardo Medeiros</strong>
-        | Última atualização: {{date}}
+        | Última atualização: {{registroAtual.data}}
       </v-col>
     </v-footer>
   </v-app>
@@ -54,21 +54,35 @@ export default {
   },
   data() {
     return {
-      notificados: 242,
-      suspeitos: 49,
-      descartados: 131,
-      curados: 28,
-      confirmados: "62 (31 ATIVOS)",
-      confirmadosaux: 62,
-      internados: 0,
-      mortes: 3,
+      registroAtual: {},
+      // notificados: 242,
+      // suspeitos: 49,
+      // descartados: 131,
+      // curados: 28,
+      // confirmados: "62 (31 ATIVOS)",
+      // confirmadosaux: 62,
+      // internados: 0,
+      // mortes: 3,
       populacao_est: 9.116,
-      date: "06/07/2020"
+      // date: "06/07/2020"
     };
+  },
+  created () {
+    this.carregarRegistroAtual();
   },
   computed: {
     mortes_percent: function () {
-      return (this.mortes/this.confirmadosaux).toFixed(3).toString() + "%";
+      return (this.registroAtual.mortes/this.registroAtual.confirmados).toFixed(3).toString() + "%";
+    },
+    confirmados: function() {
+      return `${this.registroAtual.confirmados} (${this.registroAtual.confirmados - this.registroAtual.mortes - this.registroAtual.curados} ATIVOS)`
+    }
+  },
+  methods: {
+    carregarRegistroAtual () {
+      this.$axios.get('registros/last').then(response => {
+        this.registroAtual = response.data;
+      });
     }
   }
 };
