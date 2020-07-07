@@ -66,7 +66,7 @@
       <v-col class="text-center" cols="12">
         {{ new Date().getFullYear() }} —
         <strong>Eduardo Medeiros</strong>
-        | Última atualização: {{registroAtual.data}} | Dados da
+        | Última atualização: {{registroAtual.data}} | Dados das publicações da 
         <strong>Secretaria Municipal de Saúde de Florânia</strong>
       </v-col>
     </v-footer>
