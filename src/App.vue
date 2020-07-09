@@ -66,7 +66,7 @@
       <v-col class="text-center" cols="12">
         {{ new Date().getFullYear() }} —
         <strong>Eduardo Medeiros</strong>
-        | Última atualização: {{registroAtual.data}} | Dados das publicações da 
+        | Última atualização: {{registroAtual.data}} | Dados das publicações da
         <strong>Secretaria Municipal de Saúde de Florânia</strong>
       </v-col>
     </v-footer>
@@ -87,7 +87,20 @@ export default {
   },
   data() {
     return {
-      chartOptions: { responsive: true, maintainAspectRatio: false },
+      chartOptions: {
+        elements: {
+          point: {
+            radius: 0
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        tooltips: {
+          enabled: true,
+          mode: "index",
+          intersect: false
+        }
+      },
       registroAtual: {},
       registroAll: [],
       arrConfirmados: [],
