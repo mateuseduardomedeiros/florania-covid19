@@ -14,6 +14,9 @@ export default {
 
     options: {
       type: Object
+    },
+    color: {
+      type: String
     }
   },
   mounted() {
@@ -26,7 +29,7 @@ export default {
           {
             label: this.label,
             data: total,
-            backgroundColor: "#3D844A"
+            backgroundColor: this.color
           }
         ]
       },
