@@ -24,7 +24,7 @@
           <Card titulo="Notificados" v-bind:info="registroAtual.notificados" />
           <Card titulo="Suspeitos" v-bind:info="registroAtual.suspeitos" />
           <Card titulo="Descartados" v-bind:info="registroAtual.descartados" />
-          <Card titulo="Curados" v-bind:info="registroAtual.curados" />
+          <Card titulo="Curados" v-bind:info="curados" />
           <Card titulo="Confirmados" v-bind:info="confirmados" />
           <Card titulo="Internados" v-bind:info="registroAtual.internados" />
           <Card titulo="Mortes" v-bind:info="registroAtual.mortes" />
@@ -143,6 +143,9 @@ export default {
         .confirmados -
         this.registroAtual.mortes -
         this.registroAtual.curados} ATIVOS)`;
+    },
+    curados: function() {
+      return `${this.registroAtual.curados} (${(this.registroAtual.curados/this.registroAtual.confirmados*100).toFixed(0)}% DOS CONFIRMADOS)`
     }
   },
   methods: {
