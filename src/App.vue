@@ -51,7 +51,7 @@
             :info="registroAtual.internados"
           />
           <Card icon="check" :md="4" color="#2980B9" titulo="Curados" :info="curados" />
-          <Card icon="christianity" :md="4" color="#2D3436" titulo="Óbitos" :info="mortes" />
+          <Card icon="christianity" :md="4" color="#2D3436" titulo="Óbitos" :info="registroAtual.mortes" />
           <Card
             icon="skull-crossbones"
             :md="4"
@@ -246,11 +246,6 @@ export default {
         (this.registroAtual.curados / this.registroAtual.confirmados) *
         100
       ).toFixed(0)}% DOS CONFIRMADOS)`;
-    },
-    mortes: function() {
-      return `${this.registroAtual.mortes} (${(
-        this.registroAtual.mortes / this.registroAtual.confirmados
-      ).toFixed(3)}%)`;
     },
     taxa_mortalidade: function() {
       return `${(
