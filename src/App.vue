@@ -99,6 +99,21 @@ export default {
           enabled: true,
           mode: "index",
           intersect: false
+        },
+        scales: {
+          xAxes: [
+            {
+              ticks: {
+                //mostra somente primeiro e ultimo valor do label x
+                autoSkip: false,
+                callback: (value, index, values) => {
+                  if (index == 0 || index == values.length - 1) {
+                    return value;
+                  }
+                }
+              }
+            }
+          ]
         }
       },
       registroAtual: {},
