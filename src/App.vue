@@ -80,11 +80,11 @@
       </v-container>
       <v-spacer></v-spacer>
       <v-container fluid>
-        <v-row v-if="arrSuspeitos.length > 0 && arrConfirmados.length > 0 && arrCurados.length > 0">
+        <v-row v-if="arrSuspeitos.length > 0 && arrConfirmadosAtivos.length > 0 && arrCurados.length > 0">
           <v-col cols="12" sm="12" md>
             <LineAllChart
               :chartDataSuspeitos="arrSuspeitos"
-              :chartDataConfirmados="arrConfirmados"
+              :chartDataConfirmados="arrConfirmadosAtivos"
               :chartDataCurados="arrCurados"
               :options="chartAllOptions"
             />
@@ -223,6 +223,7 @@ export default {
       registroAtual: {},
       registroAll: [],
       arrConfirmados: [],
+      arrConfirmadosAtivos: [],
       arrCurados: [],
       arrSuspeitos: [],
       populacao_est: "9.116 (IBGE 2019)"
@@ -273,8 +274,10 @@ export default {
           curados
           // descartados
         } = element;
+        element.confirmadosAtivos = (element.confirmados - element.curados - element.mortes);
 
         this.arrConfirmados.push({ data, total: confirmados });
+        this.arrConfirmadosAtivos.push({ data, total: element.confirmadosAtivos });
         this.arrCurados.push({ data, total: curados });
         this.arrSuspeitos.push({ data, total: suspeitos });
       });

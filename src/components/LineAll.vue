@@ -35,7 +35,7 @@ export default {
             fill: false,
           },
           {
-            label: "Casos Confirmados",
+            label: "Casos Confirmados Ativos",
             data: totalConfirmados,
             backgroundColor: "#E74C3C",
             borderColor: "#E74C3C",
