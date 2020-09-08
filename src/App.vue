@@ -51,7 +51,13 @@
             :info="registroAtual.internados"
           />
           <Card icon="check" :md="4" color="#2980B9" titulo="Curados" :info="curados" />
-          <Card icon="christianity" :md="4" color="#2D3436" titulo="Óbitos" :info="registroAtual.mortes" />
+          <Card
+            icon="christianity"
+            :md="4"
+            color="#2D3436"
+            titulo="Óbitos"
+            :info="registroAtual.mortes"
+          />
           <Card
             icon="skull-crossbones"
             :md="4"
@@ -80,7 +86,9 @@
       </v-container>
       <v-spacer></v-spacer>
       <v-container fluid>
-        <v-row v-if="arrSuspeitos.length > 0 && arrConfirmadosAtivos.length > 0 && arrCurados.length > 0">
+        <v-row
+          v-if="arrSuspeitos.length > 0 && arrConfirmadosAtivos.length > 0 && arrCurados.length > 0"
+        >
           <v-col cols="12" sm="12" md>
             <LineAllChart
               :chartDataSuspeitos="arrSuspeitos"
@@ -131,7 +139,7 @@
             />
           </v-col>
         </v-row>
-      </v-container> -->
+      </v-container>-->
     </v-main>
     <v-footer light color="primary" dark>
       <v-col class="text-center" cols="12">
@@ -156,22 +164,23 @@ export default {
   components: {
     Card,
     LineChart,
-    LineAllChart
+    LineAllChart,
   },
   data() {
     return {
       chartAllOptions: {
         elements: {
           point: {
-            radius: 0
-          }
+            radius: 0,
+          },
         },
         responsive: true,
         maintainAspectRatio: false,
         tooltips: {
           enabled: true,
           mode: "index",
-          intersect: false
+          position: "nearest",
+          intersect: false,
         },
         scales: {
           xAxes: [
@@ -184,24 +193,24 @@ export default {
                   if (index == 0 || index == values.length - 1) {
                     return value;
                   }
-                }
-              }
-            }
-          ]
-        }
+                },
+              },
+            },
+          ],
+        },
       },
       chartOptions: {
         elements: {
           point: {
-            radius: 0
-          }
+            radius: 0,
+          },
         },
         responsive: true,
         maintainAspectRatio: false,
         tooltips: {
           enabled: true,
           mode: "index",
-          intersect: false
+          intersect: false,
         },
         scales: {
           xAxes: [
@@ -214,11 +223,11 @@ export default {
                   if (index == 0 || index == values.length - 1) {
                     return value;
                   }
-                }
-              }
-            }
-          ]
-        }
+                },
+              },
+            },
+          ],
+        },
       },
       registroAtual: {},
       registroAll: [],
@@ -226,7 +235,7 @@ export default {
       arrConfirmadosAtivos: [],
       arrCurados: [],
       arrSuspeitos: [],
-      populacao_est: "9.116 (IBGE 2019)"
+      populacao_est: "9.116 (IBGE 2019)",
     };
   },
   async created() {
@@ -236,33 +245,43 @@ export default {
     this.carregarDadosConfirmados();
   },
   computed: {
-    confirmados: function() {
-      return `${this.registroAtual.confirmados} (${this.registroAtual
-        .confirmados -
-        this.registroAtual.mortes -
-        this.registroAtual.curados} ATIVOS)`;
+    confirmados: function () {
+      if (
+        this.registroAtual.confirmados -
+          this.registroAtual.mortes -
+          this.registroAtual.curados ===
+        0
+      ) {
+        return `${this.registroAtual.confirmados} (NENHUM CASO ATIVO)`;
+      } else {
+        return `${this.registroAtual.confirmados} (${
+          this.registroAtual.confirmados -
+          this.registroAtual.mortes -
+          this.registroAtual.curados
+        } ATIVOS)`;
+      }
     },
-    curados: function() {
+    curados: function () {
       return `${this.registroAtual.curados} (${(
         (this.registroAtual.curados / this.registroAtual.confirmados) *
         100
       ).toFixed(0)}% DOS CONFIRMADOS)`;
     },
-    taxa_mortalidade: function() {
+    taxa_mortalidade: function () {
       return `${(
         this.registroAtual.mortes / this.registroAtual.confirmados
       ).toFixed(3)}%`;
-    }
+    },
   },
   methods: {
     carregarRegistroAtual() {
-      this.$axios.get("registros/last").then(response => {
+      this.$axios.get("registros/last").then((response) => {
         this.registroAtual = response.data;
       });
     },
     async carregarDadosConfirmados() {
       const all = await this.$axios.get("registros");
-      all.data.forEach(element => {
+      all.data.forEach((element) => {
         const data = moment(element.data, "DD/MM/YYYY").format("DD/MM");
 
         const {
@@ -271,18 +290,22 @@ export default {
           confirmados,
           // internados,
           // mortes,
-          curados
+          curados,
           // descartados
         } = element;
-        element.confirmadosAtivos = (element.confirmados - element.curados - element.mortes);
+        element.confirmadosAtivos =
+          element.confirmados - element.curados - element.mortes;
 
         this.arrConfirmados.push({ data, total: confirmados });
-        this.arrConfirmadosAtivos.push({ data, total: element.confirmadosAtivos });
+        this.arrConfirmadosAtivos.push({
+          data,
+          total: element.confirmadosAtivos,
+        });
         this.arrCurados.push({ data, total: curados });
         this.arrSuspeitos.push({ data, total: suspeitos });
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
